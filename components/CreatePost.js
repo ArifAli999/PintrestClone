@@ -148,7 +148,7 @@ function CreatePost() {
                                                     {img ? (<img src={img} alt="" className="w-full max-h-60 object-contain " />) : (<>
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-pink-400 group-hover:text-pink-50"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                                                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                                         </svg>
                                                         <p className="pt-4 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
