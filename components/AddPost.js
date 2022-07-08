@@ -90,7 +90,7 @@ function AddPost() {
             <input type="file" onChange={handleChange} accept="/image/*" className='border-pink-500 border-2
             ' />
 
-            <p>{percent} "% done"</p>
+
 
         </>
 
