@@ -125,7 +125,7 @@ function CreatePost() {
 
                     </div>
                     <div>
-                        <div class="flex  p-6 flex-col items-center gap-4 justify-between  ">
+                        <div className="flex  p-6 flex-col items-center gap-4 justify-between  ">
                             <div className='flex gap-2 w-full'>
                                 <label className='text-xs text-gray-500 w-full mb-4'>TITLE
                                     <textarea type="text" id="username" name="username" required className="mt-2 border border-gray-300 shadow-gray-500/30 pl-3 w-full py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-300 text-pink-600 " placeholder="Describe your image"
@@ -135,7 +135,7 @@ function CreatePost() {
 
                             </div>
 
-                            <div class="w-full rounded-lg ">
+                            <div className="w-full rounded-lg ">
                                 <label className='text-xs text-gray-500 w-full mb-4'>FILE
                                     <div className="mt-2 rounded border border-gray-300 ">
 
@@ -167,8 +167,8 @@ function CreatePost() {
 
                             </div>
 
-                            <div class="flex justify-center p-2 mt-4  bottom-4 items-center w-full">
-                                <button class="w-4/5 px-4 py-2 bg-pink-500 border border-pink-400 text-white rounded shadow-xl" onClick={handleUpload}>Create</button>
+                            <div className="flex justify-center p-2 mt-4  bottom-4 items-center w-full">
+                                <button className="w-4/5 px-4 py-2 bg-pink-500 border border-pink-400 text-white rounded shadow-xl" onClick={handleUpload}>Create</button>
                             </div>
                         </div>
 
