@@ -9,12 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@headlessui/react": "^1.6.5",
+    "@mui/lab": "^5.0.0-alpha.89",
+    "@mui/material": "^5.8.7",
+    "@react-query-firebase/firestore": "^1.0.0-dev.6",
+    "firebase": "^9.8.4",
     "next": "12.2.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
+    "react-query": "^3.39.1",
+    "uid": "^2.0.0",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.7",
     "eslint": "8.19.0",
-    "eslint-config-next": "12.2.0"
+    "eslint-config-next": "12.2.0",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.4"
   }
 }
