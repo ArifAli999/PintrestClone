@@ -5,7 +5,11 @@ import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import { AiFillHeart, AiOutlinePlus, AiOutlineSetting } from 'react-icons/ai';
-
+import useAuthStore from '../store/authStore'
+import { uid } from "uid";
+import { app, auth, db } from "../firebase/firebase.config"
+import { collection, Timestamp, addDoc, } from 'firebase/firestore';
+import SavePost from './SavePost';
 
 
 const Label = styled(Paper)(({ theme }) => ({
@@ -18,8 +22,39 @@ const Label = styled(Paper)(({ theme }) => ({
     borderBottomRightRadius: 0,
 }));
 
+
+
 export default function PostGrid({ posts }) {
-    console.log(posts)
+
+    const { userProfile, userDetails } = useAuthStore();
+
+
+    function addToList(postid, imgUrl, content, user, useruid, listName) {
+
+
+        const dtref = Timestamp.now()
+        listName = "Test"
+        addDoc(
+            collection(db, "users", userProfile.uid, listName),
+            {
+                content: content,
+                imgUrl: imgUrl,
+                postid: postid,
+                user: user,
+                useruid: useruid,
+            }
+        ).then(() => {
+            alert('saved')
+
+
+        }).catch((err) => {
+            alert(err.message);
+        })
+
+    }
+
+
+
     return (
         <div className='p-4 ml-4 mt-4'>
             <Box sx={{ width: '100%', minHeight: 829 }}>
@@ -37,7 +72,7 @@ export default function PostGrid({ posts }) {
                             </div>
                             <div className='text-white w-[35px] h-[35px] p-[3%] items-center  rounded-full font-sans font-light text-xs   absolute left-0 bottom-3 ml-2  hidden group-hover:flex z-50 bg-black '>
 
-                                <AiOutlinePlus size={30} />
+                                <SavePost postid={item.postid} imgUrl={item.imgUrl} content={item.content} username={item.user} userid={item.useruid} />
                             </div>
                             <div className='text-white w-[35px] h-[35px] p-[3%] items-center  rounded-full font-sans font-light text-xs   absolute right-0 bottom-3 mr-2  hidden group-hover:flex z-50 bg-black '>
 
@@ -67,9 +102,15 @@ export default function PostGrid({ posts }) {
                                     />
                                 </a>
                             </Link>
-                            <div
-                                className="absolute top-0 left-0 w-full  flex flex-col justify-center items-center bg-pink-400/60 opacity-0 h-full group-hover:opacity-100 group-hover:rounded-md duration-500">
-                            </div>
+                            <Link href={{
+                                pathname: "/posts/" + `${item.postid}`,
+                                query: { id: `${item.postid}` },
+                            }} as={`/posts/${item.postid}`}>
+                                <a>
+                                    <div
+                                        className="absolute top-0 left-0 w-full  flex flex-col justify-center items-center bg-pink-400/60 opacity-0 h-full group-hover:opacity-100 group-hover:rounded-md duration-500">
+                                    </div></a>
+                            </Link>
                         </div>
                     ))}
                 </Masonry>

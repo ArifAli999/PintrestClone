@@ -4,10 +4,10 @@ import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getFunctions } from 'firebase/functions'
 
 
-
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyBDvMXp4jEUjggujtPkMIb4GoFIGx9S560",
     authDomain: "igclone-8420a.firebaseapp.com",
     projectId: "igclone-8420a",
@@ -18,7 +18,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 export const db = getFirestore(app);
 export const auth = getAuth();
+export const functions = getFunctions(app);

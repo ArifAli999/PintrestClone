@@ -44,7 +44,6 @@ const Register = () => {
     }
 
 
-
     const handleSignUp = (e) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
@@ -92,7 +91,6 @@ const Register = () => {
                 // ..
             });
     };
-
 
 
 

@@ -16,6 +16,7 @@
     "@mui/material": "^5.8.7",
     "@react-query-firebase/firestore": "^1.0.0-dev.6",
     "firebase": "^9.8.4",
+    "firebase-admin": "^11.0.0",
     "next": "12.2.0",
     "react": "^18.2.0",
     "react-dom": "18.2.0",

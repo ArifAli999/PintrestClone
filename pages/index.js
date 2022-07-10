@@ -35,7 +35,7 @@ export default function Home() {
 
 
 
-  console.log(userDetails)
+
   const [posts, setPosts] = useState([]);
 
 
@@ -54,7 +54,7 @@ export default function Home() {
 
   const snapshot = data.data;
 
-  console.log(userDetails)
+
 
   return (
 

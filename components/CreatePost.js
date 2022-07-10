@@ -58,30 +58,32 @@ function CreatePost() {
             alert("Please upload an image first!");
         }
 
-        const uidd = uid();
-        const storageRef = ref(storage, `/useruploads/${userProfile.uid}_${uidd}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                const percent = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
+        else if (file) {
+            const uidd = uid();
+            const storageRef = ref(storage, `/useruploads/${userProfile.uid}_${uidd}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const percent = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
 
-                // update progress
-                setPercent(percent);
-            },
-            (err) => console.log(err),
-            () => {
-                // download url
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    addToDb(url)
-                    handleClose()
-                    setTitle(null)
-                    console.log(url);
-                });
-            }
-        );
+                    // update progress
+                    setPercent(percent);
+                },
+                (err) => console.log(err),
+                () => {
+                    // download url
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        addToDb(url)
+                        handleClose()
+                        setTitle(null)
+                        console.log(url);
+                    });
+                }
+            );
+        }
     };
 
 
@@ -89,6 +91,7 @@ function CreatePost() {
         const uidd = uid();
         const dtref = Timestamp.now()
         setDoc(doc(db, `posts`, `${uidd}`), {
+            tweetid: uidd,
             content: title,
             useruid: `${userProfile.uid}`,
             createdAt: dtref,
@@ -116,7 +119,7 @@ function CreatePost() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} className='relative md:w-1/2 w-full min-h-5/6'>
+                <Box sx={style} className='relative md:w-[40%] w-full min-h-5/6'>
                     <div className='p-4 border-b border-gray-300 flex justify-between items-center'>
                         <div>Create a post</div>
                         <AiOutlineClose size={24} className='cursor-pointer text-gray-400  hover:text-pink-500 duration-300 auto '
@@ -142,22 +145,24 @@ function CreatePost() {
                                         <div className="flex items-center justify-center w-full ">
 
                                             <label
-                                                className="flex flex-col w-full h-full mt-6 justify-center">
+                                                className="flex flex-col w-full h-full  justify-center">
 
-                                                <div className="flex flex-col items-center justify-center pt-0 mb-4 w-full">
-                                                    {img ? (<img src={img} alt="" className="w-full max-h-60 object-contain " />) : (<>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-pink-400 group-hover:text-pink-50"
+                                                <div className="flex flex-col items-center justify-center pt-0 mb-0 max-h-[400px] w-full relative">
+                                                    {img ? (<><img src={img} alt="" className="w-full max-h-[300px] object-fit object-cover " /><input type="file" className="opacity-0 bg-gray-400 absolute w-full" onChange={handleChange} accept="/image/*" /></>
+                                                    ) : (<>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-pink-400 group-hover:text-pink-50 mt-6"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                                                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                                         </svg>
-                                                        <p className="pt-4 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                                                        <p className="pt-6 mb-6 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
                                                             Attach an image
-                                                        </p></>)}
+                                                        </p>
+                                                        <input type="file" className="opacity-0 bg-gray-400 absolute w-full" onChange={handleChange} accept="/image/*" />
+                                                    </>)}
 
 
                                                 </div>
-                                                <input type="file" className="opacity-0 bg-gray-400" onChange={handleChange} accept="/image/*" />
 
 
                                             </label>
