@@ -10,6 +10,8 @@ import { uid } from "uid";
 import { app, auth, db } from "../firebase/firebase.config"
 import { collection, Timestamp, addDoc, } from 'firebase/firestore';
 import SavePost from './SavePost';
+import LikePost from './LikePost';
+import UnlikePost from './UnlikedPost';
 
 
 const Label = styled(Paper)(({ theme }) => ({
@@ -62,13 +64,13 @@ export default function PostGrid({ posts }) {
                     style={{
                         margin: 0,
 
-
                     }}>
                     {posts && posts.map((item, index) => (
                         <div key={item.postid} className='p-0  m-10 group cursor-pointer relative group '>
                             <div className='text-white w-[35px] h-[35px] p-[3%] items-center  rounded-full font-sans font-light text-xs   absolute right-0 top-3 mr-2  hidden group-hover:flex z-50 bg-black '>
+                                {item.likedBy && item.likedBy.find(x => x === userProfile.uid) ? <UnlikePost postid={item.postid} imgUrl={item.imgUrl} content={item.content} username={item.user} userid={item.useruid} likedBy={item.likedBy} /> : <LikePost postid={item.postid} imgUrl={item.imgUrl} content={item.content} username={item.user} userid={item.useruid} likedBy={item.likedBy} />}
 
-                                <AiFillHeart size={30} />
+
                             </div>
                             <div className='text-white w-[35px] h-[35px] p-[3%] items-center  rounded-full font-sans font-light text-xs   absolute left-0 bottom-3 ml-2  hidden group-hover:flex z-50 bg-black '>
 

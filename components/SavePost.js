@@ -33,33 +33,11 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
 
     }
 
-    const getTweetComments = async () => {
-        let commentRef = collection(db, "users", userProfile.uid,);
-        const q = query(commentRef, orderBy('Timestamp', 'desc'));
-        getDocs(q)
-            .then((response) => {
-                const x = response.docs.map((item) => {
-                    return item.data();
-                })
-
-                if (!x.length > 0) {
-
-                }
-                else {
-                    console.log(x)
-                }
-
-
-
-            }).catch((err) => {
-                alert(err.message);
-            })
-
-
-    }
     function addToList(listName) {
 
         const dtref = Timestamp.now()
+
+
 
         if (inputValue) {
 
@@ -78,8 +56,25 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                 alert(err.message);
             })
         }
+        else if (listName) {
+
+            addDoc(
+                collection(db, "users", userProfile.uid, listName),
+                {
+                    content: content,
+                    imgUrl: imgUrl,
+                    postid: postid,
+                    user: username,
+                    useruid: userid,
+                }
+            ).then(() => {
+                alert('saved') // replace with toasts.
+            }).catch((err) => {
+                alert(err.message);
+            })
+        }
         else {
-            alert('Please enter a list name');
+            alert('please select a list.')
         }
     }
 
@@ -161,7 +156,8 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                                                     </div>
 
                                                     <div className=''>
-                                                        <button className='bg-pink-500 text-white rounded-full  px-2 py-2 hover:bg-pink-400 hover:text-pink-50 transition-all duration-300 ease-in-out group'>
+                                                        <button className='bg-pink-500 text-white rounded-full  px-2 py-2 hover:bg-pink-400 hover:text-pink-50 transition-all duration-300 ease-in-out group'
+                                                            onClick={() => addToList(item)}>
                                                             <AiOutlinePlus size={20} className='group-hover:rotate-90 transition-all duration-500 ease-in-out group' />
                                                         </button>
                                                     </div>
