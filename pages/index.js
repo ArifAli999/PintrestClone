@@ -68,8 +68,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {userProfile ? <PostGrid posts={snapshot} /> : 'Please Login'}
 
-      <PostGrid posts={snapshot} />
 
 
 
