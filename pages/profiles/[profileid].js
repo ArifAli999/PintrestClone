@@ -44,7 +44,7 @@ const Post = ({ profileid }) => {
                         <h2 className='md:text-4xl text-xl text-black font-bold'>{userDetails.username}</h2>
                     </div>
                     <div className='flex gap-2 mb-2'>
-                        <button class="bg-white text-pink-500 border border-pink-400 hover:bg-pink-500 transition-all duration-300 ease-linear hover:text-white rounded  font-bold py-2 px-4 ">
+                        <button className="bg-white text-pink-500 border border-pink-400 hover:bg-pink-500 transition-all duration-300 ease-linear hover:text-white rounded  font-bold py-2 px-4 ">
                             Edit
                         </button>
 
