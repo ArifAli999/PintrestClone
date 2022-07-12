@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db, auth } from "../firebase/firebase.config";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import Register from '../components/Register';
+import Login from '../components/Login';
 
 
 
@@ -59,7 +61,7 @@ export default function Home() {
   return (
 
 
-    <div className='w-full  '>
+    <div className='w-full h-full'>
 
 
       <Head>
@@ -68,7 +70,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {userProfile ? <PostGrid posts={snapshot} /> : 'Please Login'}
+      {userProfile ? <PostGrid posts={snapshot} /> : (
+        <div className="flex flex-col gap-4 items-center justify-center w-full  h-full">
+          <Register />
+          <Login />
+        </div>
+      )}
 
 
 

@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
-import { AiFillHeart, AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
+import { AiFillHeart, AiOutlinePlus, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import { FaSpinner } from 'react-icons/fa'
 import useAuthStore from '../store/authStore';
 import { uid } from "uid";
 import { app, auth, db } from "../firebase/firebase.config";
-import { collection, Timestamp, addDoc, } from 'firebase/firestore';
+import { collection, Timestamp, addDoc, doc, setDoc, } from 'firebase/firestore';
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react';
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { useQuery } from 'react-query';
+function SavePost({ postid, imgUrl, content, username, userid, favs }) {
 
-function SavePost({ postid, imgUrl, content, username, userid }) {
     const { userProfile } = useAuthStore();
+
+
 
 
 
@@ -19,6 +23,20 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
     const [showInputBox, setshowInput] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
+
+    const { isLoading, isError, data, error, refetch } = useQuery('todos', Cloud, {
+        enabled: false,
+    })
+
+    if (isLoading) {
+        return <FaSpinner size={20} className='text-white' />
+    }
+
+    if (isError) {
+        return <span>Error: {error.message}</span>
+    }
+
+    console.log(data)
 
 
 
@@ -52,14 +70,16 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                 }
             ).then(() => {
                 alert('saved') // replace with toasts.
+                setInputValue('')
+                refetch()
             }).catch((err) => {
                 alert(err.message);
             })
         }
         else if (listName) {
 
-            addDoc(
-                collection(db, "users", userProfile.uid, listName),
+            setDoc(
+                doc(db, "users", userProfile.uid, listName, `${userProfile.uid}_${postid}`),
                 {
                     content: content,
                     imgUrl: imgUrl,
@@ -68,7 +88,8 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                     useruid: userid,
                 }
             ).then(() => {
-                alert('saved') // replace with toasts.
+                alert('saved')
+                refetch() // replace with toasts.
             }).catch((err) => {
                 alert(err.message);
             })
@@ -90,8 +111,7 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
             },
         })
         const data = await res.json();
-        console.log(data)
-        setList(data)
+        return data
 
     }
 
@@ -103,7 +123,7 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
 
     return (
         <>
-            <AiOutlinePlus size={30} onClick={() => { Cloud(); openModal() }} />
+            <AiOutlinePlus size={30} onClick={() => { refetch(); openModal() }} />
 
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10 overflow-scroll" onClose={closeModal}>
@@ -116,10 +136,10 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-black bg-opacity-90" />
                     </Transition.Child>
 
-                    <div className="fixed inset-0 overflow-scroll">
+                    <div className="fixed inset-0 overflow-scroll ">
                         <div className="flex min-h-full items-center justify-center p-4 text-center">
                             <Transition.Child
                                 as={Fragment}
@@ -130,26 +150,32 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white  text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-[90%]  transform overflow-hidden rounded-2xl bg-white  text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="div"
-                                        className="text-lg p-4 border-b border-gray-300 font-medium leading-0 text-pink-500 mb-4"
+                                        className="text-lg p-4 border-b border-gray-300 font-medium leading-0 text-pink-500 mb-4 flex justify-between items-center"
                                     >
-                                        ADD TO YOUR LIST
+                                        <div className=''>
+                                            ADD TO YOUR LIST
+                                        </div>
+
+                                        <div className='text-white bg-black rounded-full p-1.5'>
+                                            <AiOutlineClose size={20} onClick={closeModal} className='0.5' />
+                                        </div>
                                     </Dialog.Title>
                                     <div className=" flex flex-col gap-0  items-center justify-center p-0 text-black">
-                                        <div className='flex items-center gap-2 border-gray-300 border-b '>
-                                            <div className='w-[40%] p-4'>
+                                        <div className='flex items-center gap-2 border-gray-300 border-b w-full '>
+                                            <div className='w-[20%] p-4'>
                                                 <img src={imgUrl} alt="post" className="w-full h-full rounded-lg shadow-lg" />
                                             </div>
                                             <div className='w-[60%]'>
                                                 <p>Saving post by {username} </p>
                                             </div>
                                         </div>
+                                        <div className='grid md:grid-cols-4 gap-4 group w-full  border-gray-200 p-4  border-b  ' >
+                                            {data && data.posts && data.posts.map((item, index) => (
 
-                                        {list && list.posts && list.posts.map((item, index) => (
-                                            <div className='flex flex-col w-full border-gray-200 p-4  border-b   ' key={index}>
-                                                <div className='flex w-full justify-between items-center'>
+                                                <div className='flex p-4 w-full border border-gray-300 rounded justify-between items-center hover:border-pink-500 transition-all duration-300 ease-linear ' key={item}>
                                                     <div className=''>
                                                         <p className='text-base text-black font-medium rota'>{item}
                                                         </p>
@@ -162,9 +188,9 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
 
+                                            ))}
+                                        </div>
 
 
 
@@ -204,15 +230,7 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
 
 
 
-                                    <div className="mt-4 p-6 flex justify-center ">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-pink-400 px-4 py-2 text-sm font-medium text-white hover:bg-pink-600  shadow-black/60 hover:shadow-md transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Register
-                                        </button>
-                                    </div>
+
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
@@ -223,5 +241,9 @@ function SavePost({ postid, imgUrl, content, username, userid }) {
         </>
     )
 }
+
+
+
+
 
 export default SavePost

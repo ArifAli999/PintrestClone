@@ -96,13 +96,13 @@ const Register = () => {
 
     return (
         <>
-            <div className="">
+            <div className="w-full   mx-auto flex items-center  justify-center">
                 <button
                     type="button"
                     onClick={openModal}
-                    className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    className="rounded-md w-[40%] h-[50px] bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 "
                 >
-                    H
+                    Register
                 </button>
             </div>
 
@@ -143,14 +143,14 @@ const Register = () => {
                                             <label htmlFor="username" className="pb-2 text-xs font-md text-gray-800 dark:text-gray-400">
                                                 USERNAME
                                             </label>
-                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="@example"
+                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="Username"
                                                 value={username} onChange={handleUsername} />
                                         </div>
                                         <div className='flex flex-col w-full '>
                                             <label htmlFor="username" className="pb-2 text-xs font-md text-gray-800 dark:text-gray-400">
                                                 EMAIL
                                             </label>
-                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="@example"
+                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="Email"
                                                 value={email} onChange={handleEmail} />
                                         </div>
 
@@ -159,7 +159,7 @@ const Register = () => {
                                             <label htmlFor="username" className="pb-2 text-xs font-md text-gray-800 dark:text-gray-400">
                                                 PASSWORD
                                             </label>
-                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="@example"
+                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="Password"
                                                 value={password} onChange={handlePassword} />
                                         </div>
 

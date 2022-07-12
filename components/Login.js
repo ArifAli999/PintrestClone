@@ -53,11 +53,11 @@ const Login = () => {
 
     return (
         <>
-            <div className="">
+            <div className="w-full  mx-auto flex items-center  justify-center">
                 <button
                     type="button"
                     onClick={openModal}
-                    className="rounded-md bg-pink-400  bg-opacity-80 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-100 hover:shadow-sm hover:shadow-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-0 transition-all duration-500 ease-in-out"
+                    className="rounded-md w-[40%] h-[50px]  bg-pink-400  bg-opacity-80 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-100 hover:shadow-sm hover:shadow-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-0 transition-all duration-500 ease-in-out"
                 >
                     Login
                 </button>
@@ -100,7 +100,7 @@ const Login = () => {
                                             <label htmlFor="username" className="pb-2 text-xs font-md text-gray-800 dark:text-gray-400">
                                                 USERNAME
                                             </label>
-                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="@example"
+                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="Email"
                                                 value={email} onChange={handleEmail} />
                                         </div>
 
@@ -109,7 +109,7 @@ const Login = () => {
                                             <label htmlFor="username" className="pb-2 text-xs font-md text-gray-800 dark:text-gray-400">
                                                 PASSWORD
                                             </label>
-                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="@example"
+                                            <input type="text" id="username" name="username" required className="border border-gray-400 shadow-gray-500/30 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400" placeholder="Password"
                                                 value={password} onChange={handlePassword} />
                                         </div>
 

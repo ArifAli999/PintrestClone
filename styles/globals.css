@@ -25,3 +25,14 @@
 .css-z1hl6c-MuiMasonry-root {
 	margin: 0px !important;
 }
+
+div#__next {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	line-height: inherit;
+	height: 100vh;
+	min-height: 100vh;
+}

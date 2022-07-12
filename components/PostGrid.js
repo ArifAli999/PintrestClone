@@ -58,7 +58,7 @@ export default function PostGrid({ posts }) {
 
 
     return (
-        <div className='p-4 ml-4 mt-4'>
+        <div className='p-4 ml-4 mt-0'>
             <Box sx={{ width: '100%', minHeight: 829 }}>
                 <Masonry columns={{ xs: 1, sm: 1, md: 4 }} spacing={4}
                     style={{
