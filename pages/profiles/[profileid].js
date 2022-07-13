@@ -16,15 +16,29 @@ const Post = ({ profileid }) => {
         collection(db, "posts"),
         where("useruid", "==", profileid),
     );
+
+    const ref2 = query(
+        collection(db, "posts"),
+        where("likedBy", 'array-contains', profileid),
+    );
+
+    const data2 = useFirestoreQueryData(["userFavs", profileid], ref2, {
+        subscribe: true,
+    });
+
     const data = useFirestoreQueryData(["userProfile", profileid], ref, {
         subscribe: true,
     });
+
+
 
     if (data.isLoading) {
         return <div>Loading...</div>;
     }
 
     const snapshot = data.data;
+    const userlikes = data2.data
+    console.log(userlikes)
 
 
 
@@ -56,7 +70,7 @@ const Post = ({ profileid }) => {
 
                 <div className='flex flex-col'>
                     <div>
-                        <ProfileTabs posts={snapshot} />
+                        <ProfileTabs posts={snapshot} likes={userlikes} profileid={profileid} />
                     </div>
 
 

@@ -36,7 +36,7 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
         return <span>Error: {error.message}</span>
     }
 
-    console.log(data)
+
 
 
 
@@ -165,8 +165,8 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
                                     </Dialog.Title>
                                     <div className=" flex flex-col gap-0  items-center justify-center p-0 text-black">
                                         <div className='flex items-center gap-2 border-gray-300 border-b w-full '>
-                                            <div className='w-[20%] p-4'>
-                                                <img src={imgUrl} alt="post" className="w-full h-full rounded-lg shadow-lg" />
+                                            <div className='w-[20%]  p-4'>
+                                                <img src={imgUrl} alt="post" className="w-full max-h-[300px] rounded-lg shadow-lg" />
                                             </div>
                                             <div className='w-[60%]'>
                                                 <p>Saving post by {username} </p>
