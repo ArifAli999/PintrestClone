@@ -27,7 +27,7 @@ function ProfileTabs({ posts, likes, profileid }) {
                 <Tab.Panel>
                     <LikedPosts likes={likes} />
                 </Tab.Panel>
-                <Tab.Panel>
+                <Tab.Panel className='w-full'>
                     <ListPosts profileid={profileid} />
                 </Tab.Panel>
             </Tab.Panels>
