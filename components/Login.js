@@ -7,6 +7,7 @@ import {
 import useAuthStore from './../store/authStore';
 import { app, auth, db } from "../firebase/firebase.config"
 import { setDoc, doc, Timestamp } from 'firebase/firestore';
+import { sendToast } from '../util/sendToast';
 
 
 
@@ -38,7 +39,7 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
                 // Signed in
-                alert("signed in");
+                sendToast('Success')
                 addUser(auth.currentUser)
                 setIsOpen(false)
                 // ...

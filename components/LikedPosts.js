@@ -12,6 +12,7 @@ import { collection, Timestamp, addDoc, } from 'firebase/firestore';
 import SavePost from './SavePost';
 import LikePost from './LikePost';
 import UnlikePost from './UnlikedPost';
+import { sendToast } from '../util/sendToast';
 
 
 const Label = styled(Paper)(({ theme }) => ({
@@ -46,7 +47,7 @@ export default function LikedPosts({ likes }) {
                 useruid: useruid,
             }
         ).then(() => {
-            alert('saved')
+            sendToast('Post Liked')
 
 
         }).catch((err) => {

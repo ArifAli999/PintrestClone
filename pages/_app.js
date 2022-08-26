@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import Layout from '../components/Layout'
 import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from 'react-query'
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -22,7 +23,7 @@ export default function MyApp({ Component, pageProps }) {
 
 
     <QueryClientProvider client={queryClient}>
-
+      <Toaster />
       <Layout>
         <Component {...pageProps} />
       </Layout>

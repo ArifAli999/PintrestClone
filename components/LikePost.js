@@ -6,6 +6,8 @@ import { app, auth, db } from "../firebase/firebase.config";
 import { collection, Timestamp, addDoc, setDoc, doc } from 'firebase/firestore';
 import { useState } from 'react';
 import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import toast from 'react-hot-toast';
+import { sendToast } from '../util/sendToast';
 
 function LikePost({ postid, imgUrl, content, username, userid, likedBy }) {
 
@@ -23,28 +25,35 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy }) {
 
 
 
-    function closeModal() {
-        setIsOpen(false)
-        setshowInput(false)
-    }
+    /*    function closeModal() {
+           setIsOpen(false)
+           setshowInput(false)
+       }
+   
+   
+   
+       function openModal() {
+           setIsOpen(true)
+   
+       } */
 
 
 
-    function openModal() {
-        setIsOpen(true)
 
-    }
 
-    function LikeHandler() {
+    async function LikeHandler() {
 
-        const dtref = Timestamp.now()
+        const dtref = Timestamp.now();
         updateDoc(
             doc(db, "posts", postid),
             {
                 likedBy: arrayUnion(`${userProfile.uid}`)
             }
         ).then(() => {
-            alert('Liked') // replace with toasts.
+
+            sendToast('Post Liked')
+
+
         }).catch((err) => {
             alert(err.message);
         })

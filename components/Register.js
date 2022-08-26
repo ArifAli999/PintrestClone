@@ -11,6 +11,7 @@ import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import {
     createUserWithEmailAndPassword,
 } from "firebase/auth";
+import { sendToast } from '../util/sendToast';
 
 
 const Register = () => {
@@ -48,7 +49,7 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
                 // registered and signed in
-                alert("registered");
+                sendToast('Registered')
 
                 const uidd = uid();
                 const dtref = Timestamp.now()

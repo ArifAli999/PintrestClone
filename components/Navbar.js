@@ -35,14 +35,18 @@ function Navbar() {
 
                 </div>
                     <div className="flex gap-6 items-center  ">
-                        <div className='text-black text-bold  p-2 rounded-full cursor-pointer group hover:bg-pink-600 transition-all duration-300 ease-in-out flex gap-1 bg  items-center border border-pink-400'>
-                            <Link href={`/profiles/${userProfile.uid}`}>
+                        <Link href={`/profiles/${userProfile.uid}`}>
+
+                            <div className='text-black text-bold  p-2 rounded-full cursor-pointer group hover:bg-pink-600 transition-all duration-300 ease-in-out flex gap-1 bg  items-center border border-pink-400'>
+
                                 <p className='text-base font-normal ml-2  mr-2 text-gray-600 group-hover:text-white'>{userDetails && userDetails.username}</p>
-                            </Link>
-                            <Link href={`/profiles/${userProfile.uid}`}>
+
+
                                 <AiOutlineUser size={24} className='text-pink-300 group-hover:text-pink-100' />
-                            </Link>
-                        </div>
+
+                            </div>
+
+                        </Link>
                         <div className='text-black cursor-pointer hover:text-pink-500 transition-all duration-300 ease-in-out'>
                             <CreatePost />
                         </div>

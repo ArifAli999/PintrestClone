@@ -9,6 +9,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react';
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useQuery } from 'react-query';
+import { sendToast } from '../util/sendToast';
 function SavePost({ postid, imgUrl, content, username, userid, favs }) {
 
     const { userProfile } = useAuthStore();
@@ -69,7 +70,7 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
                     useruid: userid,
                 }
             ).then(() => {
-                alert('saved') // replace with toasts.
+                sendToast('Success')
                 setInputValue('')
                 refetch()
             }).catch((err) => {
@@ -86,6 +87,7 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
                     postid: postid,
                     user: username,
                     useruid: userid,
+                    state: doc(db, 'posts/' + postid),
                 }
             ).then(() => {
                 alert('saved')
@@ -95,7 +97,7 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
             })
         }
         else {
-            alert('please select a list.')
+            sendToast('Please select a list first')
         }
     }
 

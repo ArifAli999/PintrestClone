@@ -5,6 +5,7 @@ import {
 import useAuthStore from './../store/authStore';
 import { app, auth, db } from "../firebase/firebase.config"
 import { AiOutlineLogout } from 'react-icons/ai'
+import { sendToast } from '../util/sendToast';
 
 
 function Signout() {
@@ -13,7 +14,7 @@ function Signout() {
     const handleSignOut = (e) => {
         signOut(auth)
             .then(() => {
-                alert("Logged Out");
+                sendToast('Post Liked')
                 addUser(null)
             })
             .catch((error) => {

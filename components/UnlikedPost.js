@@ -6,6 +6,7 @@ import { app, auth, db } from "../firebase/firebase.config";
 import { collection, Timestamp, addDoc, setDoc, doc } from 'firebase/firestore';
 import { useState } from 'react';
 import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { sendToast } from '../util/sendToast';
 
 function UnlikePost({ postid, imgUrl, content, username, userid, likedBy }) {
 
@@ -44,7 +45,7 @@ function UnlikePost({ postid, imgUrl, content, username, userid, likedBy }) {
                 likedBy: arrayRemove(`${userProfile.uid}`)
             }
         ).then(() => {
-            alert('Unliked') // replace with toasts.
+            sendToast('Unliked')
         }).catch((err) => {
             alert(err.message);
         })

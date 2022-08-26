@@ -5,6 +5,7 @@ import { useState, useEffect, } from "react";
 import { app, auth, db, storage } from "../firebase/firebase.config";
 import { uid } from "uid";
 import useAuthStore from '../store/authStore'
+import { sendToast } from '../util/sendToast';
 
 
 
@@ -73,9 +74,9 @@ function AddPost() {
             imgUrl: url
 
         }).then(() => {
-            alert("Posted");
+            sendToast('Posted')
         }).catch((err) => {
-            alert(err.message);
+            sendToast(err.message)
         })
 
 

@@ -7,6 +7,7 @@ import { Timestamp, doc, setDoc, } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import useAuthStore from '../store/authStore'
 import { db, storage } from "../firebase/firebase.config";
+import { sendToast } from '../util/sendToast';
 
 
 
@@ -101,9 +102,9 @@ function CreatePost() {
 
 
         }).then(() => {
-            alert("Posted");
+            sendToast('Post Liked')
         }).catch((err) => {
-            alert(err.message);
+            sendToast('Error')
         })
 
 

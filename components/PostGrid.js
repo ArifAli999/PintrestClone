@@ -12,6 +12,8 @@ import { collection, Timestamp, addDoc, } from 'firebase/firestore';
 import SavePost from './SavePost';
 import LikePost from './LikePost';
 import UnlikePost from './UnlikedPost';
+import toast from 'react-hot-toast';
+import { sendToast } from '../util/sendToast';
 
 
 const Label = styled(Paper)(({ theme }) => ({
@@ -31,6 +33,7 @@ export default function PostGrid({ posts }) {
     const { userProfile, userDetails } = useAuthStore();
 
 
+
     function addToList(postid, imgUrl, content, user, useruid, listName) {
 
 
@@ -46,7 +49,7 @@ export default function PostGrid({ posts }) {
                 useruid: useruid,
             }
         ).then(() => {
-            alert('saved')
+            sendToast('Post Liked')
 
 
         }).catch((err) => {
@@ -59,6 +62,8 @@ export default function PostGrid({ posts }) {
 
     return (
         <div className='p-4 ml-4 mt-0'>
+
+
             <Box sx={{ width: '100%', minHeight: 829 }}>
                 <Masonry columns={{ xs: 1, sm: 1, md: 4 }} spacing={4}
                     style={{
