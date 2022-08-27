@@ -16,6 +16,7 @@ function AddPost() {
 
 
     const [title, setTitle] = useState("");
+
     const [file, setFile] = useState("");
 
     // progress

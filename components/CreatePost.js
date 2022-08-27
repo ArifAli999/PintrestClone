@@ -8,6 +8,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import useAuthStore from '../store/authStore'
 import { db, storage } from "../firebase/firebase.config";
 import { sendToast } from '../util/sendToast';
+import FileUploader from './FileUploader';
 
 
 
@@ -40,6 +41,8 @@ function CreatePost() {
 
     const [title, setTitle] = useState("");
     const [file, setFile] = useState("");
+    const [description, setDescriptions] = useState("");
+    const [screenTwo, setScreenTwo] = useState(false);
 
     // progress
     const [percent, setPercent] = useState(0);
@@ -51,6 +54,18 @@ function CreatePost() {
         if (file) {
             setImg(URL.createObjectURL(file));
         }
+
+    }
+
+    const newScreen = () => {
+
+        
+            
+
+            if(title.length > 3 && description.length> 5) {
+                setScreenTwo(true)
+            }
+   
 
     }
 
@@ -75,12 +90,15 @@ function CreatePost() {
                 },
                 (err) => console.log(err),
                 () => {
-                    // download url
+                    // download url and add to db, clear all the fields and reset the screen of the modal.
+                    
                     getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                         addToDb(url)
                         handleClose()
-                        setTitle(null)
-                        console.log(url);
+                        setTitle('')
+                        setDescriptions('')
+                        setScreenTwo(false)
+                       
                     });
                 }
             );
@@ -99,6 +117,7 @@ function CreatePost() {
             user: `${userProfile.email}`,
             postid: `${uidd}`,
             imgUrl: url,
+            description: description,
 
 
         }).then(() => {
@@ -128,57 +147,46 @@ function CreatePost() {
 
 
                     </div>
-                    <div>
-                        <div className="flex  p-6 flex-col items-center gap-4 justify-between  ">
-                            <div className='flex gap-2 w-full'>
-                                <label className='text-xs text-gray-500 w-full mb-4'>TITLE
-                                    <textarea type="text" id="username" name="username" required className="mt-2 border border-gray-300 shadow-gray-500/30 pl-3 w-full py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-300 text-pink-600 " placeholder="Describe your image"
-                                        value={title} onChange={(e) => setTitle(e.target.value)}>
-                                    </textarea>
-                                </label>
 
+                    {screenTwo ? (<FileUploader img={img} handleChange={handleChange} />) : (
+                        <div>
+                            <div className="flex  p-6 flex-col items-center gap-4 justify-between  ">
+                                <div className='flex gap-2 w-full'>
+                                    <label className='text-xs text-gray-500 w-full mb-4'>Title
+                                        <input type="text" id="username" name="username" required className="mt-2 border border-gray-300 shadow-gray-500/30 pl-3 w-full py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-300 text-pink-600 " placeholder="Describe your image"
+                                            value={title} onChange={(e) => setTitle(e.target.value)} />
+
+                                    </label>
+
+                                </div>
+
+
+                                <div className='flex gap-2 w-full'>
+                                    <label className='text-xs text-gray-500 w-full mb-4'>Description
+                                        <textarea type="text" id="username" name="username" required className="mt-2 border border-gray-300 shadow-gray-500/30 pl-3 w-full py-3 shadow-sm rounded text-sm focus:outline-none focus:border-pink-500 bg-transparent placeholder-gray-300 text-pink-600 " placeholder="Describe your image"
+                                            value={description} onChange={(e) => setDescriptions(e.target.value)} />
+
+                                    </label>
+
+                                </div>
+
+
+
+
+                             
                             </div>
 
-                            <div className="w-full rounded-lg ">
-                                <label className='text-xs text-gray-500 w-full mb-4'>FILE
-                                    <div className="mt-2 rounded border border-gray-300 ">
-
-                                        <div className="flex items-center justify-center w-full ">
-
-                                            <label
-                                                className="flex flex-col w-full h-full  justify-center">
-
-                                                <div className="flex flex-col items-center justify-center pt-0 mb-0 max-h-[400px] w-full relative">
-                                                    {img ? (<><img src={img} alt="" className="w-full max-h-[300px] object-fit object-cover " /><input type="file" className="opacity-0 bg-gray-400 absolute w-full" onChange={handleChange} accept="/image/*" /></>
-                                                    ) : (<>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-pink-400 group-hover:text-pink-50 mt-6"
-                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                                                        </svg>
-                                                        <p className="pt-6 mb-6 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                                                            Attach an image
-                                                        </p>
-                                                        <input type="file" className="opacity-0 bg-gray-400 absolute w-full" onChange={handleChange} accept="/image/*" />
-                                                    </>)}
-
-
-                                                </div>
-
-
-                                            </label>
-                                        </div>
-                                    </div>
-                                </label>
-
-                            </div>
-
-                            <div className="flex justify-center p-2 mt-4  bottom-4 items-center w-full">
-                                <button className="w-4/5 px-4 py-2 bg-pink-500 border border-pink-400 text-white rounded shadow-xl" onClick={handleUpload}>Create</button>
-                            </div>
                         </div>
+                    )}
 
+                    <div className="flex justify-center p-4 gap-2 mt-4  bottom-4 items-center w-full">
+                        {screenTwo ? <button className="w-4/5 px-4 py-2 bg-pink-500 border border-pink-400 text-white rounded shadow-xl" onClick={handleUpload} >Create</button> : null} 
+                      
+
+                        {screenTwo ? (<button className="w-4/5 px-4 py-2  border border-pink-400 text-pink-500 rounded shadow-xl" onClick={() => setScreenTwo(false)}>Back</button>) : <button className="w-4/5 px-4 py-2 bg-pink-500 border border-pink-400 text-white rounded shadow-xl" onClick={() => newScreen()}>Continue</button> }
+                       
                     </div>
+
                 </Box>
             </Modal></>
     )
