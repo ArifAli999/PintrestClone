@@ -161,7 +161,7 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
                                             ADD TO YOUR LIST
                                         </div>
 
-                                        <div className='text-white bg-black rounded-full p-1.5'>
+                                        <div className='text-white bg-black rounded-full p-1.5 hover:bg-black/60 transition-all ease-in-out duration-300'>
                                             <AiOutlineClose size={20} onClick={closeModal} className='0.5' />
                                         </div>
                                     </Dialog.Title>
