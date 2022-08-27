@@ -6,6 +6,7 @@ import { useFirestoreDocument, useFirestoreQueryData } from "@react-query-fireba
 import PostGrid from '../../components/PostGrid';
 import useAuthStore from '../../store/authStore';
 import ProfileTabs from '../../components/ProfieTabs';
+import { FaSpinner } from 'react-icons/fa';
 const Post = ({ profileid }) => {
     const router = useRouter()
 
@@ -33,7 +34,12 @@ const Post = ({ profileid }) => {
 
 
     if (data.isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className='flex items-center w-full h-full justify-center'>
+
+                <FaSpinner size={50} className='text-pink-600' />
+            </div>
+        );
     }
 
     const snapshot = data.data;

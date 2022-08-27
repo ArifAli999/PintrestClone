@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { app, db } from '../../firebase/firebase.config'
 import { useFirestoreDocument } from "@react-query-firebase/firestore";
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
+import { FaSpinner } from 'react-icons/fa';
 
 
 const Post = ({ postid }) => {
@@ -21,7 +22,12 @@ const Post = ({ postid }) => {
 
 
     if (product.isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className='flex items-center w-full h-full justify-center'>
+
+                <FaSpinner size={50} className='text-pink-600' />
+            </div>
+        );
     }
 
     const snapshot = product.data; // DocumentSnapshot

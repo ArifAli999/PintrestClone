@@ -9,6 +9,7 @@ import { db, auth } from "../firebase/firebase.config";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import Register from '../components/Register';
 import Login from '../components/Login';
+import { FaSpinner } from 'react-icons/fa';
 
 
 
@@ -52,7 +53,12 @@ export default function Home() {
 
 
   if (data.isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='flex items-center w-full h-full justify-center'>
+
+      <FaSpinner size={50} className='text-pink-600'/>
+      </div>
+      );
   }
 
   const snapshot = data.data;

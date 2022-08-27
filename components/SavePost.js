@@ -30,7 +30,7 @@ function SavePost({ postid, imgUrl, content, username, userid, favs }) {
     })
 
     if (isLoading) {
-        return <FaSpinner size={20} className='text-white' />
+        return <FaSpinner size={20} className='text-black' />
     }
 
     if (isError) {
