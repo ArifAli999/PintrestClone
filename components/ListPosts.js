@@ -23,7 +23,10 @@ function ListPosts({ profileid }) {
     const { isLoading, isError, data, error, refetch } = useQuery('todos', Cloud)
 
     if (isLoading) {
-        return 'loading'
+        return (<div className='flex items-center w-full h-full justify-center'>
+
+            <FaSpinner size={50} className='text-pink-600' />
+        </div>)
     }
 
     if (isError) {

@@ -3,7 +3,7 @@ import Login from './Login'
 import Register from './Register'
 import useAuthStore from '../store/authStore'
 import Signout from './Signout';
-import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
 import { MdOutlineManageAccounts } from 'react-icons/md';
 import { FaSignOutAlt } from 'react-icons/fa'
 import CreatePost from './CreatePost'
@@ -49,6 +49,10 @@ function Navbar() {
                         </Link>
                         <div className='text-black cursor-pointer hover:text-pink-500 transition-all duration-300 ease-in-out'>
                             <CreatePost />
+                        </div>
+
+                        <div className='text-black cursor-pointer hover:text-pink-500 transition-all duration-300 ease-in-out'>
+                            <AiOutlineSearch size={24} />
                         </div>
 
                         <Signout />
