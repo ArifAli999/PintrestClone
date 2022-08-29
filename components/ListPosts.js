@@ -11,6 +11,7 @@ import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import { AiFillHeart, AiOutlinePlus, AiOutlineSetting } from 'react-icons/ai';
+import { FaSpinner } from 'react-icons/fa';
 import ListGrid from './ListGrid';
 
 function ListPosts({ profileid }) {

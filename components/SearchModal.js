@@ -4,12 +4,17 @@ import { Fragment, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch-hooks-web';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 function SearchModal() {
 
 
     let [isOpen, setIsOpen] = useState(false)
     const [showHits, setShowHits] = useState(false);
+
+    const { asPath } = useRouter()
+    
 
     function openModal() {
         setIsOpen(true)
@@ -46,8 +51,19 @@ function SearchModal() {
 
     function Hit({ hit }) {
         return (
-            <article>
-                {hit.path.replace('posts/', '')}
+            <article className='w-full border border-gray-300 rounded'>
+                <Link href={`http://localhost:3000/posts/${hit.path.replace('posts/', '')}`} >
+                    <div className='flex items-center w-full  '>
+                   
+
+                        <img src={hit.imgUrl} className="w-[150px] h-[100px] p-4 object-cover rounded " />
+
+                        <a >
+                            {hit.content}
+                        </a>
+                    </div>
+                </Link>
+               
             </article>
         );
     }
@@ -97,11 +113,11 @@ function SearchModal() {
                                   >
                                       <SearchBox placeholder="Search for products" searchAsYouType={true}
                                       className='w-full h-full   rounded-md'
-                                          onFocus={() => setShowHits(true)} onBlur={() => setShowHits(false)}
+                                        
                                       />
 
 
-                                      {showHits ? <Hits hitComponent={Hit} /> : null}
+                                       <Hits hitComponent={Hit} /> 
 
 
                                   </InstantSearch>

@@ -25,13 +25,7 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
 
-  function Hit({ hit }) {
-    return (
-      <article>
-        {hit.path.replace('posts/', '')}
-      </article>
-    );
-  }
+
 
   if (isSSR) return null;
   return (
