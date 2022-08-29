@@ -12,8 +12,9 @@ function SearchModal() {
 
     let [isOpen, setIsOpen] = useState(false)
     const [showHits, setShowHits] = useState(false);
-
-    const { asPath } = useRouter()
+    const [hostName, setHost] = useState('');
+ 
+    const  router  = useRouter()
     
 
     function openModal() {
@@ -23,6 +24,10 @@ function SearchModal() {
     function closeModal() {
         setIsOpen(false)
     }
+
+
+
+  
 
 
     const algoliaClient = algoliasearch('24TKP5PN1N', 'e4eb3c37819946a48ff9e2a0e0ad053b');
@@ -51,14 +56,14 @@ function SearchModal() {
 
     function Hit({ hit }) {
         return (
-            <article className='w-full border border-gray-300 rounded'>
-                <Link href={`http://localhost:3000/posts/${hit.path.replace('posts/', '')}`} >
+            <article className='w-full ounded hover:cursor-pointer '>
+                <Link href={`${router.basePath}/posts/${hit.path.replace('posts/', '')}`} >
                     <div className='flex items-center w-full  '>
                    
-
-                        <img src={hit.imgUrl} className="w-[150px] h-[100px] p-4 object-cover rounded " />
-
-                        <a >
+<div className='rounded-md'>
+                        <img src={hit.imgUrl} className="w-[150px] h-[100px] p-2  object-cover rounded-md " />
+                        </div>
+                        <a className='font-semibold text-xs text-gray-400 hover:text-pink-500' >
                             {hit.content}
                         </a>
                     </div>
@@ -83,7 +88,7 @@ function SearchModal() {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
               >
-                  <div className="fixed inset-0 bg-black bg-opacity-25" />
+                  <div className="fixed inset-0 bg-black bg-opacity-80" />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-y-auto">
@@ -97,22 +102,23 @@ function SearchModal() {
                           leaveFrom="opacity-100 scale-100"
                           leaveTo="opacity-0 scale-95"
                       >
-                          <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white  text-left align-middle shadow-xl transition-all">
-                              <Dialog.Title
-                                  as="div"
-                                  className="text-lg p-4 border-b border-gray-300 font-medium leading-0 text-pink-500"
-                              >
-                                  SEARCH
-                              </Dialog.Title>
+                          <Dialog.Panel className="w-full max-w-[800px] transform overflow-hidden rounded-2xl  text-left align-middle transition-all">
+                          
                           
 
-<div className="p-4 rounded w-full">
+<div className="p-4  w-full">
                                   <InstantSearch
                                       indexName="data" 
                                       searchClient={searchClient}
                                   >
-                                      <SearchBox placeholder="Search for products" searchAsYouType={true}
-                                      className='w-full h-full   rounded-md'
+                                      <SearchBox placeholder="What are you looking for? " searchAsYouType={true}
+                                        classNames={{
+          root: 'p-3 shadow-sm',
+          form: 'relative',
+          input: 'block w-full !w-[300px] pr-3 py-2 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 ',
+          submitIcon: 'hidden',
+
+        }}
                                         
                                       />
 

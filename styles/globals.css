@@ -36,3 +36,14 @@ body {
 	height: 100vh;
 	min-height: 100vh;
 }
+
+
+.ais-SearchBox-input {
+border-radius: 10px !important;}
+
+.ais-SearchBox-form {
+border-radius: 10px !important;
+    height: 3.5rem !important;
+	
+}
+
