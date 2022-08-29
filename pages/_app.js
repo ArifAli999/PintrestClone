@@ -5,37 +5,18 @@ import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from 'reac
 import toast, { Toaster } from 'react-hot-toast';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch-hooks-web';
-
+import 'instantsearch.css/themes/satellite.css';
 
 export default function MyApp({ Component, pageProps }) {
+  
+  
   const [showHits, setShowHits] = useState(false);
 
   const queryClient = new QueryClient()
   queryClient.invalidateQueries()
 
 
-  const algoliaClient = algoliasearch('24TKP5PN1N', 'e4eb3c37819946a48ff9e2a0e0ad053b');
-
-
-
- const searchClient = {
-  ...algoliaClient,
-  search(requests) {
-    if (requests.every(({ params }) => !params.query)) {
-      return Promise.resolve({
-        results: requests.map(() => ({
-          hits: [],
-          nbHits: 0,
-          nbPages: 0,
-          page: 0,
-          processingTimeMS: 0,
-        })),
-      });
-    }
-
-    return algoliaClient.search(requests);
-  },
-};
+  
 
   const [isSSR, setIsSSR] = useState(true);
 
@@ -47,12 +28,7 @@ export default function MyApp({ Component, pageProps }) {
   function Hit({ hit }) {
     return (
       <article>
-     
-        <h1>
-        
-     
-        </h1>
-        {hit.content}
+        {hit.path.replace('posts/', '')}
       </article>
     );
   }
@@ -62,19 +38,7 @@ export default function MyApp({ Component, pageProps }) {
 
 
     <QueryClientProvider client={queryClient}>
-      <InstantSearch
-        indexName="data"
-        searchClient={searchClient}
-      >
-        <SearchBox placeholder="Search for products" searchAsYouType={true} 
-          onFocus={() => setShowHits(true)} onBlur={() => setShowHits(false)}
-          />
 
-
-        {showHits ? <Hits hitComponent={Hit} /> : null}
-
-
-      </InstantSearch>
       <Toaster />
       <Layout>
 

@@ -8,6 +8,7 @@ import { MdOutlineManageAccounts } from 'react-icons/md';
 import { FaSignOutAlt } from 'react-icons/fa'
 import CreatePost from './CreatePost'
 import Link from 'next/link';
+import SearchModal from './SearchModal';
 
 
 
@@ -17,6 +18,8 @@ import Link from 'next/link';
 function Navbar() {
 
     const { userProfile, userDetails } = useAuthStore();
+
+
 
 
     return (
@@ -52,7 +55,7 @@ function Navbar() {
                         </div>
 
                         <div className='text-black cursor-pointer hover:text-pink-500 transition-all duration-300 ease-in-out'>
-                            <AiOutlineSearch size={24} />
+                          <SearchModal/>
                         </div>
 
                         <Signout />
