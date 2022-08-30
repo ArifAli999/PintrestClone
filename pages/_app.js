@@ -7,16 +7,20 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch-hooks-web';
 import 'instantsearch.css/themes/satellite.css';
 
+
+const queryClient = new QueryClient()
+
+
 export default function MyApp({ Component, pageProps }) {
-  
-  
+
+
   const [showHits, setShowHits] = useState(false);
 
-  const queryClient = new QueryClient()
+
   queryClient.invalidateQueries()
 
 
-  
+
 
   const [isSSR, setIsSSR] = useState(true);
 

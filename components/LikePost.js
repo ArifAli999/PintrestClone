@@ -9,7 +9,7 @@ import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import toast from 'react-hot-toast';
 import { sendToast } from '../util/sendToast';
 
-function LikePost({ postid, imgUrl, content, username, userid, likedBy }) {
+function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryClient }) {
 
     const { userProfile } = useAuthStore();
 
@@ -22,20 +22,6 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy }) {
     const [inputValue, setInputValue] = useState('');
 
 
-
-
-
-    /*    function closeModal() {
-           setIsOpen(false)
-           setshowInput(false)
-       }
-   
-   
-   
-       function openModal() {
-           setIsOpen(true)
-   
-       } */
 
 
 
@@ -52,6 +38,7 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy }) {
         ).then(() => {
 
             sendToast('Post Liked')
+            queryClient.invalidateQueries(['todos']);
 
 
         }).catch((err) => {
@@ -87,7 +74,7 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy }) {
     return (
         <>
 
-            <AiFillHeart size={30} onClick={() => LikeHandler()} />
+            <AiFillHeart size={30} className='text-white' onClick={() => LikeHandler()} />
 
 
 

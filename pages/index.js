@@ -56,12 +56,13 @@ export default function Home() {
     return (
       <div className='flex items-center w-full h-full justify-center'>
 
-      <FaSpinner size={50} className='text-pink-600'/>
+        <FaSpinner size={50} className='text-pink-600' />
       </div>
-      );
+    );
   }
 
   const snapshot = data.data;
+
 
 
 

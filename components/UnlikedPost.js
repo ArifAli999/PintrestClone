@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { sendToast } from '../util/sendToast';
 
-function UnlikePost({ postid, imgUrl, content, username, userid, likedBy }) {
+function UnlikePost({ postid, imgUrl, content, username, userid, likedBy, queryClient }) {
 
     const { userProfile } = useAuthStore();
 
@@ -46,6 +46,7 @@ function UnlikePost({ postid, imgUrl, content, username, userid, likedBy }) {
             }
         ).then(() => {
             sendToast('Unliked')
+            queryClient.invalidateQueries(['todos']);
         }).catch((err) => {
             alert(err.message);
         })

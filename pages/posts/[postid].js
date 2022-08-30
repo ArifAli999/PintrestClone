@@ -1,40 +1,50 @@
 import { useRouter } from 'next/router'
-import { collection, query, limit, where, doc } from "firebase/firestore";
+import { collection, query, limit, where, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { app, db } from '../../firebase/firebase.config'
 import { useFirestoreDocument } from "@react-query-firebase/firestore";
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
-import { FaSpinner } from 'react-icons/fa';
+import { FaComments, FaSpinner } from 'react-icons/fa';
+import { FcLikePlaceholder } from 'react-icons/fc'
+import LikePost from '../../components/LikePost';
+import useAuthStore from '../../store/authStore';
+import UnlikePost from '../../components/UnlikedPost';
+import { useQuery, useQueryClient } from 'react-query';
 
 
 const Post = ({ postid }) => {
+
+    const queryClient = useQueryClient()
+
+
     const router = useRouter()
 
     const [pageparm, setParam] = useState()
+    const { userProfile } = useAuthStore()
 
+    const { isLoading, isError, data, error } = useQuery(['todos'], () => fetchProduct())
 
-    console.log(postid)
-
-
-    const ref = doc(db, "posts", postid);
-    const product = useFirestoreDocument(["posts", postid], ref);
-
-
-
-    if (product.isLoading) {
-        return (
-            <div className='flex items-center w-full h-full justify-center'>
-
-                <FaSpinner size={50} className='text-pink-600' />
-            </div>
-        );
+    async function fetchProduct() {
+        const querySnapshot = await getDoc(doc(db, "posts", postid));
+        return querySnapshot.data()
     }
 
-    const snapshot = product.data; // DocumentSnapshot
 
-    const data = snapshot.data(); // DocumentData
+    console.log(data)
 
-    console.log(snapshot.data())
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -48,32 +58,38 @@ const Post = ({ postid }) => {
 
     return (
         <div className='w-full  '>
-            <div className='flex md:flex-row flex-col w-full mt-6   border border-gray-300 rounded  bg-white'>
-                <div className=' md:w-[50%]  flex items-center justify-center border-r border-gray-300 '>
-                    <img className='w-full  max-h-[600px] min-h-[300px] block cursor-pointer  object-fit  ' src={data.imgUrl} />
-                </div>
-                <div className='w-full flex md:flex-row flex-col gap-0'>
-                    <div className=' w-[90%] h-full bg-stone-50'>
-                        <div className='flex flex-col gap-4  p-4'>
-                            <div className='w-full border-b border-gray-200 mt-4'>
-                                <h2 className='md:text-3xl text-xl font-sans font-bold text-black mb-3'>{data.content}</h2>
-                            </div>
 
-                            <div className='mt-10 p-4'>
-                                <p className='text-gray-700 text-base'>Here is a short description of each post that is yet to be implemented</p>
+            {data && (
+                <div className='flex md:flex-row flex-col w-full mt-6   border border-gray-300 rounded  bg-white'>
+                    <div className=' md:w-[50%]  flex items-center justify-center border-r border-gray-300 '>
+                        <img className='w-full  max-h-[600px] min-h-[300px] block cursor-pointer  object-fit  ' src={data.imgUrl} />
+                    </div>
+                    <div className='w-full flex md:flex-row flex-col gap-0'>
+                        <div className=' w-[90%] h-full bg-stone-50'>
+                            <div className='flex flex-col gap-4  p-4'>
+                                <div className='w-full border-b border-gray-200 mt-4'>
+                                    <h2 className='md:text-3xl text-xl font-sans font-bold text-black mb-3'>{data.content}</h2>
+                                </div>
+
+                                <div className='mt-4 p-4'>
+                                    <p className='text-gray-700 text-base'>{data.description && data.description}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className='md:w-[10%] h-full bg-pink-400 flex md:flex-col gap-2 justify-between items-center pr-6 pl-6 pt-6 pb-6 md:pr-0 md:pl-0'>
-                        <AiOutlineUser size={24} className='text-white' />
-                        <AiOutlineUser size={24} className='text-white' />
-                        <AiOutlineUser size={24} className='text-white' />
+                        <div className='md:w-[10%] h-full bg-black flex md:flex-col gap-2 justify-between items-center pr-6 pl-6 pt-6 pb-6 md:pr-0 md:pl-0'>
+                            <AiOutlineUser size={24} className='text-white' />
+                            <FaComments size={24} className='text-white' />
+
+                            {data.likedBy && data.likedBy.find(x => x === userProfile.uid) ? <UnlikePost postid={data.postid} imgUrl={data.imgUrl} content={data.content} username={data.user} userid={data.useruid} likedBy={data.likedBy}
+                                queryClient={queryClient} /> : <LikePost postid={data.postid} imgUrl={data.imgUrl} content={data.content} username={data.user} userid={data.useruid} likedBy={data.likedBy} queryClient={queryClient} />}
+
+                        </div>
+
                     </div>
 
                 </div>
-
-            </div>
+            )}
         </div>
     )
 }
