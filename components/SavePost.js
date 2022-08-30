@@ -10,6 +10,7 @@ import { Fragment, useState } from 'react';
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useQuery } from 'react-query';
 import { sendToast } from '../util/sendToast';
+
 function SavePost({ postid, imgUrl, content, username, userid, favs }) {
 
     const { userProfile } = useAuthStore();

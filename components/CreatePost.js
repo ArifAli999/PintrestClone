@@ -31,7 +31,7 @@ const style = {
 
 function CreatePost() {
 
-    const { userProfile } = useAuthStore();
+    const { userProfile, userDetails } = useAuthStore();
 
     const [img, setImg] = useState();
 
@@ -114,10 +114,11 @@ function CreatePost() {
             content: title,
             useruid: `${userProfile.uid}`,
             createdAt: dtref,
-            user: `${userProfile.email}`,
+            user: `${userDetails.username}`,
             postid: `${uidd}`,
             imgUrl: url,
             description: description,
+   
 
 
         }).then(() => {

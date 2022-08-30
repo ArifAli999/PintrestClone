@@ -11,7 +11,7 @@ import { sendToast } from '../util/sendToast';
 
 
 function AddPost() {
-    const { userProfile } = useAuthStore();
+    const { userProfile, userDetails } = useAuthStore();
 
 
 
@@ -70,7 +70,7 @@ function AddPost() {
             content: 'image tite',
             useruid: `${userProfile.uid}`,
             createdAt: dtref,
-            user: `${userProfile.email}`,
+            user: `${userDetails.username}`,
             postid: `${uidd}`,
             imgUrl: url
 
