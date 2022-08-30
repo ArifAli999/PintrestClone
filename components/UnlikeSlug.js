@@ -6,10 +6,9 @@ import { app, auth, db } from "../firebase/firebase.config";
 import { collection, Timestamp, addDoc, setDoc, doc } from 'firebase/firestore';
 import { useState } from 'react';
 import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import toast from 'react-hot-toast';
 import { sendToast } from '../util/sendToast';
 
-function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryClient }) {
+function UnlikeSlug({ postid, imgUrl, content, username, userid, likedBy, queryClient }) {
 
     const { userProfile } = useAuthStore();
 
@@ -25,22 +24,29 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryCli
 
 
 
+    function closeModal() {
+        setIsOpen(false)
+        setshowInput(false)
+    }
 
 
-    async function LikeHandler() {
 
-        const dtref = Timestamp.now();
+    function openModal() {
+        setIsOpen(true)
+
+    }
+
+    function LikeHandler() {
+
+        const dtref = Timestamp.now()
         updateDoc(
             doc(db, "posts", postid),
             {
-                likedBy: arrayUnion(`${userProfile.uid}`)
+                likedBy: arrayRemove(`${userProfile.uid}`)
             }
         ).then(() => {
-
-            sendToast('Post Liked')
-            // queryClient.invalidateQueries(['todos']);
-
-
+            sendToast('Unliked')
+            queryClient.invalidateQueries(['todos']);
         }).catch((err) => {
             alert(err.message);
         })
@@ -51,30 +57,12 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryCli
 
 
 
-    async function Cloud() {
-
-        const res = await fetch(`/api/posts/${userProfile.uid}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await res.json();
-        console.log(data)
-        setList(data)
-
-    }
-
-    function showInput() {
-        setshowInput(true)
-    }
-
 
 
     return (
         <>
 
-            <AiFillHeart size={30} className='text-white' onClick={() => LikeHandler()} />
+            <AiFillHeart className='text-pink-500' size={30} onClick={() => LikeHandler()} />
 
 
 
@@ -82,4 +70,4 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryCli
     )
 
 }
-export default LikePost
+export default UnlikeSlug

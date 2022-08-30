@@ -46,7 +46,7 @@ function UnlikePost({ postid, imgUrl, content, username, userid, likedBy, queryC
             }
         ).then(() => {
             sendToast('Unliked')
-            queryClient.invalidateQueries(['todos']);
+            //queryClient.invalidateQueries(['todos']);
         }).catch((err) => {
             alert(err.message);
         })

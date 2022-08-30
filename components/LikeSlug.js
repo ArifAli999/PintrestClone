@@ -9,7 +9,7 @@ import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import toast from 'react-hot-toast';
 import { sendToast } from '../util/sendToast';
 
-function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryClient }) {
+function LikeSlug({ postid, imgUrl, content, username, userid, likedBy, queryClient }) {
 
     const { userProfile } = useAuthStore();
 
@@ -38,7 +38,7 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryCli
         ).then(() => {
 
             sendToast('Post Liked')
-            // queryClient.invalidateQueries(['todos']);
+            queryClient.invalidateQueries(['todos']);
 
 
         }).catch((err) => {
@@ -82,4 +82,4 @@ function LikePost({ postid, imgUrl, content, username, userid, likedBy, queryCli
     )
 
 }
-export default LikePost
+export default LikeSlug

@@ -10,7 +10,8 @@ import LikePost from '../../components/LikePost';
 import useAuthStore from '../../store/authStore';
 import UnlikePost from '../../components/UnlikedPost';
 import { useQuery, useQueryClient } from 'react-query';
-
+import UnlikeSlug from '../../components/UnlikeSlug'
+import LikeSlug from '../../components/LikeSlug'
 
 const Post = ({ postid }) => {
 
@@ -30,10 +31,26 @@ const Post = ({ postid }) => {
     }
 
 
-    console.log(data)
+    // console.log(data)
 
 
 
+
+    if (isLoading) {
+        return (<div className='flex items-center w-full h-full justify-center'>
+
+            <FaSpinner size={50} className='text-pink-600' />
+        </div>)
+    }
+
+    if (error) {
+        return (<div className='flex items-center w-full h-full justify-center'>
+
+            <p className='text-red-400 font-serif font-light text-2xl'>
+                Sorry an error occured, please try again later
+            </p>
+        </div>)
+    }
 
 
 
@@ -81,8 +98,8 @@ const Post = ({ postid }) => {
                             <AiOutlineUser size={24} className='text-white' />
                             <FaComments size={24} className='text-white' />
 
-                            {data.likedBy && data.likedBy.find(x => x === userProfile.uid) ? <UnlikePost postid={data.postid} imgUrl={data.imgUrl} content={data.content} username={data.user} userid={data.useruid} likedBy={data.likedBy}
-                                queryClient={queryClient} /> : <LikePost postid={data.postid} imgUrl={data.imgUrl} content={data.content} username={data.user} userid={data.useruid} likedBy={data.likedBy} queryClient={queryClient} />}
+                            {data.likedBy && data.likedBy.find(x => x === userProfile.uid) ? <UnlikeSlug postid={data.postid} imgUrl={data.imgUrl} content={data.content} username={data.user} userid={data.useruid} likedBy={data.likedBy}
+                                queryClient={queryClient} /> : <LikeSlug postid={data.postid} imgUrl={data.imgUrl} content={data.content} username={data.user} userid={data.useruid} likedBy={data.likedBy} queryClient={queryClient} />}
 
                         </div>
 
