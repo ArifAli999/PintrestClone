@@ -23,7 +23,6 @@ const Post = ({ profileid }) => {
 
     useEffect(() => {
         const fetchNames = async () => {
-          
             try {
                 const unsub = onSnapshot(doc(db, "users", profileid), (doc) => {
                  
@@ -31,21 +30,12 @@ const Post = ({ profileid }) => {
                    setFollowers(doc.data())
                 });
 
-
-
             } catch (error) {
                 console.log("error", error);
             }
-
-    
-           
-
         };
-
-
-
         fetchNames();
-    }, []);
+    }, [profileid]);
     
 
 
@@ -55,9 +45,7 @@ const Post = ({ profileid }) => {
     );
 
 
-    const followUser =  () => {    
-        followers.FollowedBy && followers.FollowedBy.find(x => x.userid === userProfile.uid) ? console.log('followed') : console.log('not followed')
-    }
+   
 
 
     const ref2 = query(
@@ -119,17 +107,16 @@ const Post = ({ profileid }) => {
                     </div>
                     <div className='flex gap-2 mb-2'>
 
-                        {userProfile.uid === user && user.map((m) => m.useruid) ? <button className="bg-white text-pink-500 border border-pink-400 hover:bg-pink-500 transition-all duration-300 ease-linear hover:text-white rounded  font-bold py-2 px-4 ">
-                            Edit
-                        </button> : 
-                        
-                 
+                        {user && user.map((m)=> m.useruid) == userProfile.uid ?
+                            (<button className="bg-white text-pink-500 border border-pink-400 hover:bg-pink-500 transition-all duration-300 ease-linear hover:text-white rounded-full  font-bold py-2 px-4 ">
+                                Edit
+                            </button>) : 
+                            (followers.FollowedBy && followers.FollowedBy.find(x => x.userid === userProfile.uid) ? <button className='text-white bg-pink-500 border border-pink-600 rounded-full p-2  px-4'>Unfollow</button> : <button className='text-pink-600 border border-pink-600 rounded-full p-2 px-4'>follow</button>)
 
-                            followers.FollowedBy && followers.FollowedBy.find(x => x.userid === userProfile.uid) ? <button className='text-white bg-pink-500 border border-pink-600 rounded-full p-2  px-4'>Unfollow</button> : <button className='text-pink-600 border border-pink-600 rounded-full p-2 px-4'>Unfollow</button> 
+                            
+                            }
 
-                    
-                         
-                        }
+                  
    
 
 
