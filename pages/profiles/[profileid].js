@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { collection, query, limit, where, doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
+import { collection, query, limit, where, doc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { app, db } from '../../firebase/firebase.config'
 import { useFirestoreDocument, useFirestoreQueryData } from "@react-query-firebase/firestore";
@@ -10,6 +10,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 
 import { sendToast } from '../../util/sendToast';
+import FollowModal from '../../components/FollowModal';
 
 
 const Post = ({ profileid }) => {
@@ -17,11 +18,15 @@ const Post = ({ profileid }) => {
 
 
 
-    const [followers, setFollowers] = useState([])
-    const [followed, setFollowed] = useState(false)
-    const { userDetails } = useAuthStore();
 
-    const { userProfile} = useAuthStore()
+
+
+
+    const [followers, setFollowers] = useState([''])
+    const [followed, setFollowed] = useState(false)
+
+
+    const { userProfile, userDetails} = useAuthStore()
 
 
 
@@ -59,13 +64,29 @@ const Post = ({ profileid }) => {
             FollowedBy: arrayUnion(
                 {
                     userid: userProfile.uid,
-                    username: userProfile.email
+                    username: userDetails.username
                 }
             )
         })
         .then(()=> {
                 sendToast('Success')
         })
+    }
+
+
+    async function unFollowUser () {
+        const dbRef = doc(db, 'users', profileid);
+
+
+        await updateDoc(dbRef, {
+        FollowedBy: arrayRemove( {
+            userid: userProfile.uid,
+            username: userDetails.username
+        })
+        })
+            .then(() => {
+                sendToast('Success')
+            })
     }
    
 
@@ -126,15 +147,23 @@ const Post = ({ profileid }) => {
                 <div className='mt-5 mb-0 py-2.5 ml-6 mr-6 flex items-center justify-between border-b border-gray-300 '>
                     <div className='flex-1 mb-2'>
                         <h2 className='md:text-4xl text-xl text-black font-bold'>{user && user.map((m)=> m.username)}</h2>
+
+                    
                     </div>
-                    <div className='flex gap-2 mb-2'>
+
+
+                    
+                    <div className='flex gap-4 mb-2 items-center '>
+                      
+                            <FollowModal followers={followers}/>
 
                         {user && user.map((m)=> m.useruid) == userProfile.uid ?
                             (<button className="bg-white text-pink-500 border border-pink-400 hover:bg-pink-500 transition-all duration-300 ease-linear hover:text-white rounded-full  font-bold py-2 px-4 ">
                                 Edit
                             </button>) : 
-                            (followers.FollowedBy && followers.FollowedBy.find(x => x.userid === userProfile.uid) ? <button className='text-white bg-pink-500 border border-pink-600 rounded-full p-2  px-4'>Unfollow</button> : <button className='text-pink-600 border border-pink-600 rounded-full p-2 px-4'
-                            onClick={followUser}>Follow</button>)
+                            (followers.FollowedBy && followers.FollowedBy.find(x => x.userid === userProfile.uid) ? <button className='text-white bg-pink-500 border border-pink-600 rounded-full p-2  px-4'
+                                onClick={unFollowUser}>Unfollow </button> : <button className='text-pink-600 border border-pink-600 rounded-full p-2 px-4'
+                            onClick={followUser}>Follow </button>)
 
                             
                             }
@@ -165,7 +194,7 @@ const Post = ({ profileid }) => {
 export default Post
 
 export const getServerSideProps = async ({ params }) => {
-    console.log(params)
+   
     const profileid = params.profileid;
     return {
         props: { profileid }
