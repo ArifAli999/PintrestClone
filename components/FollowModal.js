@@ -77,7 +77,7 @@ function FollowModal({followers}) {
                           <div className="  w-full">
 <div className='flex flex-col'>
                           {followers && followers.FollowedBy?.map ((m)=> (
-                            <div className='p-4 border-b border-gray-300 flex flex-row justify-between items-center cursor-pointer hover:bg-gray-200/60 transition-all duration-500 ease-in-out'>
+                            <div className='p-4 border-b border-gray-300 flex flex-row justify-between items-center cursor-pointer hover:bg-gray-200/60 transition-all duration-500 ease-in-out' key={m.userid}>
                           <div className='flex flex-row gap-4 flex-1 items-center'>
                             <div className=''>
                                           <img src='https://i.pravatar.cc/150?img=3' className='object-cover w-[85px] h-[80px] rounded-full'></img>
