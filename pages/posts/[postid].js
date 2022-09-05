@@ -16,6 +16,7 @@ import Link from 'next/link';
 import PostDropDown from '../../components/PostDropDown';
 import SavePost from '../../components/SavePost';
 import { format, compareAsc } from 'date-fns'
+import RelatedPosts from '../../components/RelatedPosts';
 
 const Post = ({ postid }) => {
 
@@ -68,7 +69,7 @@ const Post = ({ postid }) => {
 
 
 
-                    <div className='flex flex-col mb-8 gap-0 border  border-gray-600'>
+                    <div className='flex flex-col mb-4 gap-0 border  border-gray-600'>
 
                         <div className=' h-full bg-stone-50  flex flex-col justify-between flex-1'>
                             <div className='flex flex-col gap- '>
@@ -121,7 +122,13 @@ const Post = ({ postid }) => {
 
                         </div>
 
+
+
+
                     </div>
+
+
+                    <RelatedPosts poster={poster} />
 
                 </div>
             )}
