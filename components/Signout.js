@@ -6,16 +6,23 @@ import useAuthStore from './../store/authStore';
 import { app, auth, db } from "../firebase/firebase.config"
 import { AiOutlineLogout } from 'react-icons/ai'
 import { sendToast } from '../util/sendToast';
+import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
 
 
 function Signout() {
+    const router = useRouter();
     const { userProfile, addUser } = useAuthStore();
 
-    const handleSignOut = (e) => {
-        signOut(auth)
+    const handleSignOut = () => {
+        router.push('/')
             .then(() => {
-                sendToast('Post Liked')
+                signOut(auth)
+            })
+            .then(() => {
+                sendToast('Success')
                 addUser(null)
+
             })
             .catch((error) => {
                 toast(error.message);

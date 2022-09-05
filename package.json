@@ -16,6 +16,7 @@
     "@mui/material": "^5.8.7",
     "@react-query-firebase/firestore": "^1.0.0-dev.6",
     "algoliasearch": "^4.14.2",
+    "date-fns": "^2.29.2",
     "firebase": "^9.8.4",
     "firebase-admin": "^11.0.0",
     "hoist-non-react-statics": "^3.3.2",

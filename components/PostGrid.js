@@ -82,14 +82,14 @@ export default function PostGrid({ posts }) {
                                 <SavePost postid={item.postid} imgUrl={item.imgUrl} content={item.content} username={item.user} userid={item.useruid} />
                             </div>
 
-                       {item.useruid === userProfile.uid ? (
+                            {item.useruid === userProfile.uid ? (
                                 <div className='text-white w-[35px] h-[35px] p-[3%] items-center  rounded-full font-sans font-light text-xs   absolute right-0 bottom-3 mr-2  hidden group-hover:flex z-50 bg-black '>
 
                                     <AiOutlineSetting size={30} />
                                 </div>
-                       ): null} 
+                            ) : null}
 
-                         
+
                             <Link href={{
                                 pathname: "/posts/" + `${item.postid}`,
                                 query: { id: `${item.postid}` },
@@ -100,7 +100,7 @@ export default function PostGrid({ posts }) {
 
                                         srcSet={`${item.imgUrl}`}
                                         alt={item.content}
-                                        loading="lazy"
+                                        loading="eager"
                                         style={{
                                             borderBottomLeftRadius: 4,
                                             borderBottomRightRadius: 4,
