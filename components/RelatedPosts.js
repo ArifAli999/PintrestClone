@@ -50,7 +50,7 @@ function RelatedPosts({ poster }) {
 
                     {related.map((m) => (
 
-                        <div className='mb-4 w-[]'>
+                        <div className='mb-4 w-[]' key={m.postid}>
                             <img className=' w-[400px] h-[280px]  block cursor-pointer rounded  object-cover  ' src={m.imgUrl} />
 
                         </div>
