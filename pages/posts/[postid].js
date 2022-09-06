@@ -63,8 +63,8 @@ const Post = ({ postid }) => {
             {poster && (
                 <div className='flex md:flex-col flex-col w-full mt-6  gap-4 rounded md:p-0 p-6 bg-white'>
 
-                    <div className=' md:w-[100%]  flex items-center justify-center rounded-md border border-gray-300 shadow-md  '>
-                        <img className='w-full  max-h-[600px] min-h-[300px] block cursor-pointer rounded  object-cover  ' src={poster.imgUrl} />
+                    <div className=' md:w-[100%]  flex items-center justify-center  p-4'>
+                        <img className='w-full  max-h-[600px] min-h-[300px] block cursor-pointer rounded-md  object-contain  ' src={poster.imgUrl} />
                     </div>
 
 

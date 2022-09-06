@@ -34,24 +34,27 @@ function RelatedPosts({ poster }) {
 
 
     return (
-        <div className='border border-gray-500 mb-6 p-4 rounded flex flex-col gap-6'>
-            <div className='flex items-center gap-2 mt-2'>
-                <p className='text-gray-600 text-lg font-light'>
-                    More content from <span className=' '> {poster.user}</span>
+        <div className='border border-gray-500 mb-6  rounded flex flex-col gap-6'>
+            <div className='flex items-center gap-2 border-b border-gray-500 p-4 justify-between'>
+                <p className='text-gray-800 font-semibold '>
+                    More from <span className='text-pink-500 font-semibold '> {poster.user}</span>
 
                 </p>
 
 
+                <a className='text-pink-400 font-light text-base'>View Profile</a>
+
+
             </div>
 
-            {related ?
+            {related.filter(x => x.postid !== poster.postid) ?
 
                 <div className='grid grid-cols-4 gap-4 p-4 items-center justify-items-center '>
 
-                    {related.map((m) => (
+                    {related.filter(x => x.postid !== poster.postid).map((m) => (
 
                         <div className='mb-4 w-[]' key={m.postid}>
-                            <img className=' w-[400px] h-[280px]  block cursor-pointer rounded  object-cover  ' src={m.imgUrl} />
+                            <img className=' md:w-[250px] md:h-[200px]  block cursor-pointer rounded  object-cover  ' src={m.imgUrl} />
 
                         </div>
 
